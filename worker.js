@@ -1,5 +1,5 @@
 /**
- * Worker de Gang Life RP
+ * Worker de hispania rp
  * Hace 2 cosas que NO se pueden hacer de forma segura desde el navegador:
  *  1) /exchange  -> cambia el "code" de Discord por datos del usuario (usa el client_secret, oculto aquí)
  *  2) /log       -> reenvía los eventos al webhook de Discord (así el webhook nunca aparece en el HTML)
