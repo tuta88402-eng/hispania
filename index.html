@@ -12,7 +12,7 @@ body{background:#050505;color:#f7f7f7}.card{background:rgba(8,8,8,.92);border:1p
 </head>
 
 <body class="overflow-hidden">
-<div class="footer-tuta">@2020 BY TUTA</div>
+<div class="footer-tuta">@2025 BY TUTA</div>
 
 <div id="auth" class="fixed inset-0 z-50 overflow-hidden bg-black">
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(88,28,135,.45),transparent_38%),radial-gradient(circle_at_85%_78%,rgba(190,18,60,.33),transparent_40%)]"></div>
@@ -177,7 +177,7 @@ const CONFIG = {
   // PENDIENTE: pon aquí la URL exacta donde publiques index.html en GitHub Pages
   // (ej: "https://tuusuario.github.io/hispania-rp/") — debe ser IDÉNTICA
   // a la que registres en Discord como Redirect URI. Ver README.md paso 2.
-  discordRedirectUri: "https://TU-USUARIO.github.io/TU-REPO/",
+  discordRedirectUri: "https://tuta88402-eng.github.io/hispania/",
   // PENDIENTE: URL de tu Worker una vez lo despliegues (ver README.md paso 3)
   apiBase: "https://TU-WORKER.workers.dev",
   // Logo actual (link de Discord, CADUCARÁ tarde o temprano por la firma ex=/is=/hm=).
@@ -257,6 +257,7 @@ const wrong=["Ignorar la normativa para terminar rápido.","Usar información de
 window.onload=async ()=>{
   createSnow();
   authLogo.src=CONFIG.logoUrl;sideLogo.src=CONFIG.logoUrl;dashLogo.src=CONFIG.logoUrl;
+  setFavicon(CONFIG.logoUrl);
 
   const p=new URLSearchParams(location.search);
   const code=p.get("code");
@@ -270,6 +271,12 @@ window.onload=async ()=>{
   }
   renderAll();
 };
+
+function setFavicon(url){
+  let link=document.querySelector("link[rel~='icon']");
+  if(!link){link=document.createElement('link');link.rel='icon';document.head.appendChild(link)}
+  link.href=url;
+}
 
 function createSnow(){for(let i=0;i<80;i++){let s=document.createElement("span");s.className="snow";s.textContent="•";s.style.left=Math.random()*100+"vw";s.style.fontSize=Math.random()*10+8+"px";s.style.animationDuration=Math.random()*7+6+"s";s.style.animationDelay=Math.random()*6+"s";document.body.appendChild(s)}}
 
@@ -321,7 +328,7 @@ function demoLogin(){
     avatar:"",
     roles:["ciudadano"],
     id:"DEMO-0000",
-    email:"demo@ganglife.rp",
+    email:"demo@hispania.rp",
     joined:new Date().toLocaleDateString()
   },false);
 }
