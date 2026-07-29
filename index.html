@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hispania RP - Panel WL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+body{background:#050505;color:#f7f7f7}.card{background:rgba(8,8,8,.92);border:1px solid #242424}.soft{background:#141414;border:1px solid #2a2a2a}.active-nav{background:#171717;color:white;border-left:3px solid #fb7185}.option[aria-checked=true]{border-color:#fb7185;background:rgba(251,113,133,.14)}.qbtn.active{background:#fb7185;color:white}.qbtn.done{background:#065f46;color:#6ee7b7}.qbtn.empty{background:#151515;color:#6b7280}.snow{position:fixed;top:-20px;z-index:2;color:white;opacity:.75;pointer-events:none;animation:fall linear infinite}@keyframes fall{to{transform:translateY(110vh) translateX(35px)}}.spin-logo{animation:spinLogo 7s linear infinite}@keyframes spinLogo{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}.footer-tuta{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);z-index:35;color:#fb7185;font-size:12px;font-weight:900;letter-spacing:.18em;text-shadow:0 0 14px rgba(251,113,133,.35)}
+</style>
+</head>
+
+<body class="overflow-hidden">
+<div class="footer-tuta">@2020 BY TUTA</div>
+
+<div id="auth" class="fixed inset-0 z-50 overflow-hidden bg-black">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(88,28,135,.45),transparent_38%),radial-gradient(circle_at_85%_78%,rgba(190,18,60,.33),transparent_40%)]"></div>
+  <div class="relative z-10 mx-auto grid min-h-screen max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
+    <div>
+      <img id="authLogo" class="spin-logo mb-16 h-24 w-24 rounded-2xl object-contain" src="">
+      <h1 class="max-w-xl text-5xl font-black leading-tight sm:text-6xl">Bienvenido a <span class="block text-rose-300">Hispania RP</span></h1>
+      <p class="mt-6 max-w-xl text-xl leading-relaxed text-gray-400">La comunidad de roleplay más inmersiva. Conecta Discord para entrar al panel.</p>
+      <div class="mt-9 grid max-w-xl gap-3 sm:grid-cols-2">
+        <div class="soft rounded-xl p-4"><i class="fa-solid fa-users mr-3 rounded-lg bg-rose-400/20 p-2 text-rose-300"></i><b>Comunidad activa</b></div>
+        <div class="soft rounded-xl p-4"><i class="fa-solid fa-shield mr-3 rounded-lg bg-rose-400/20 p-2 text-rose-300"></i><b>Sistema de whitelist</b></div>
+        <div class="soft rounded-xl p-4"><i class="fa-solid fa-star mr-3 rounded-lg bg-rose-400/20 p-2 text-rose-300"></i><b>Roleplay de calidad</b></div>
+        <div class="soft rounded-xl p-4"><i class="fa-solid fa-bolt mr-3 rounded-lg bg-rose-400/20 p-2 text-rose-300"></i><b>Eventos exclusivos</b></div>
+      </div>
+    </div>
+
+    <div class="mx-auto w-full max-w-md">
+      <div class="card rounded-3xl p-8 shadow-2xl shadow-rose-950/30">
+        <h2 class="text-center text-3xl font-black">Iniciar Sesión</h2>
+        <p class="mt-3 text-center text-gray-400">Conecta tu cuenta de Discord para continuar</p>
+        <button id="btnDiscordLogin" onclick="openDiscordAuth()" class="mt-8 flex w-full items-center justify-center gap-3 rounded-xl bg-[#5865F2] px-5 py-4 text-lg font-black shadow-lg shadow-indigo-500/30 hover:bg-indigo-500">
+          <i class="fa-brands fa-discord"></i> Continuar con Discord <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button onclick="demoLogin()" class="mt-3 w-full rounded-xl border border-[#333] py-3 text-sm font-bold text-gray-400 hover:text-white">Entrar en modo demo</button>
+        <p id="authError" class="mt-3 hidden text-center text-sm font-bold text-red-400"></p>
+        <div class="my-8 flex items-center gap-3 text-xs uppercase tracking-widest text-gray-500"><span class="h-px flex-1 bg-white/10"></span>Información<span class="h-px flex-1 bg-white/10"></span></div>
+        <div class="space-y-3">
+          <div class="soft rounded-xl p-4"><i class="fa-solid fa-shield mr-3 rounded-lg bg-blue-500/20 p-2 text-blue-300"></i><b>Conexión segura</b><p class="ml-12 text-sm text-gray-400">OAuth2 de Discord</p></div>
+          <div class="soft rounded-xl p-4"><i class="fa-solid fa-circle-question mr-3 rounded-lg bg-emerald-500/20 p-2 text-emerald-300"></i><b>Ayuda</b><p class="ml-12 text-sm text-gray-400"><a class="text-rose-300 underline" href="https://discord.gg/hakRfzfPdf" target="_blank">discord.gg/hakRfzfPdf</a></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid h-screen grid-cols-[288px_1fr]">
+  <aside class="border-r border-[#222] bg-black">
+    <div class="flex h-16 items-center gap-3 border-b border-[#222] px-4">
+      <img id="sideLogo" class="spin-logo h-10 w-10 rounded-lg bg-rose-400/20 object-contain p-1">
+      <div><b>HispaniaRP</b><p class="text-xs text-gray-500">Panel v2.0</p></div>
+    </div>
+
+    <div class="border-b border-[#222] p-4">
+      <div class="flex items-center gap-3">
+        <div id="sideAvatar" class="h-12 w-12 overflow-hidden rounded-lg bg-[#111]"></div>
+        <div><b id="sideName">Usuario</b><p class="text-xs text-gray-400"><span class="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400"></span><span id="sideRole">Usuario</span></p></div>
+      </div>
+    </div>
+
+    <nav class="space-y-2 p-3 text-sm font-bold text-gray-400">
+      <button onclick="showView('dashboard',this)" class="side active-nav flex w-full items-center gap-3 rounded-lg px-4 py-3"><i class="fa-solid fa-house"></i>Dashboard</button>
+      <button onclick="showView('profile',this)" class="side flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-regular fa-user"></i>Mi Perfil</button>
+      <button onclick="showView('applications',this)" class="side flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-regular fa-file-lines"></i>Aplicaciones <span id="sideApps" class="ml-auto">0</span></button>
+      <button onclick="showView('rules',this)" class="side flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-solid fa-gavel"></i>Normativas</button>
+      <button onclick="showView('requests',this)" class="side flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-solid fa-list-check"></i>Revisión WL</button>
+    </nav>
+
+    <div class="absolute bottom-8 w-[288px] border-t border-[#222] p-3 text-sm text-gray-400">
+      <a href="https://discord.gg/hakRfzfPdf" target="_blank" class="flex w-full gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-regular fa-circle-question"></i>Ayuda Discord</a>
+      <button onclick="alertBox('Ajustes','Edita CONFIG para worker (login/logs), logo y textos.')" class="flex w-full gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-solid fa-gear"></i>Ajustes</button>
+      <button onclick="logout()" class="flex w-full gap-3 rounded-lg px-4 py-3 hover:bg-[#151515]"><i class="fa-solid fa-right-from-bracket"></i>Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <main class="overflow-y-auto pb-12">
+    <header class="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-[#222] bg-black/90 px-6 backdrop-blur">
+      <div class="flex items-center gap-3"><h2 id="pageTitle" class="text-2xl font-black">Dashboard</h2><span class="rounded-full border border-[#222] px-3 py-1 text-xs"><span class="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400"></span>Online</span></div>
+      <button onclick="showView('applications')" class="rounded-lg bg-rose-400 px-5 py-3 text-sm font-black"><i class="fa-solid fa-plus mr-2"></i>Nueva Aplicación</button>
+    </header>
+
+    <section id="dashboard" class="view grid gap-4 p-4 xl:grid-cols-[1fr_525px]">
+      <div class="space-y-4">
+        <div class="card rounded-xl p-5">
+          <div class="flex items-center gap-4">
+            <img id="dashLogo" class="spin-logo h-16 w-16 rounded-xl object-contain">
+            <div><h3 class="text-2xl font-black">Bienvenido, <span id="dashName">Usuario</span> <span class="rounded-full border border-[#333] px-2 py-1 text-xs text-gray-400">Usuario</span></h3><p class="text-sm text-gray-400">@<span id="dashHandle">usuario</span> • Hispania RP</p></div>
+          </div>
+        </div>
+
+        <div class="card rounded-xl p-5">
+          <h3 class="mb-4 text-lg font-black"><i class="fa-solid fa-award mr-2 text-rose-400"></i>Progreso de Whitelist</h3>
+          <div class="grid gap-3 md:grid-cols-2">
+            <div class="rounded-xl border border-amber-500/60 bg-amber-500/10 p-4">
+              <div class="flex justify-between"><b class="text-lg">Fase 1</b><b class="text-amber-300">En progreso</b></div>
+              <p class="mt-2 text-sm text-gray-400">30 preguntas. Puedes terminar desde la pregunta 20.</p>
+              <button onclick="showView('applications')" class="mt-4 rounded-lg bg-rose-300 px-5 py-3 font-black">Continuar <i class="fa-solid fa-arrow-right ml-2"></i></button>
+            </div>
+            <div class="rounded-xl border border-[#222] bg-[#111] p-4 opacity-50"><b class="text-lg">Fase 2</b><p class="mt-3 text-gray-500"><i class="fa-solid fa-lock mr-2"></i>Desactivada</p></div>
+          </div>
+        </div>
+
+        <div class="card min-h-[490px] rounded-xl">
+          <div class="flex justify-between border-b border-[#222] p-4"><b><i class="fa-regular fa-file-lines mr-2 text-rose-400"></i>Aplicaciones Recientes</b><button onclick="showView('requests')" class="text-rose-300">Ver todas <i class="fa-solid fa-chevron-right"></i></button></div>
+          <div id="recent" class="flex h-[420px] items-center justify-center text-center text-gray-500"></div>
+        </div>
+      </div>
+
+      <aside class="space-y-4">
+        <div class="card rounded-xl p-5">
+          <div class="flex justify-between"><b class="text-lg">Completado de Perfil</b><b id="percent" class="text-3xl text-rose-400">50%</b></div>
+          <div class="mt-4 h-2 rounded bg-[#222]"><div id="bar" class="h-2 rounded bg-rose-300" style="width:50%"></div></div>
+          <div class="mt-5 space-y-3 text-sm"><p><i class="fa-regular fa-circle-check mr-2 text-emerald-400"></i>Discord conectado</p><p><i class="fa-regular fa-circle-check mr-2 text-emerald-400"></i>Username configurado</p><p id="staffLine" class="text-gray-500"><i class="fa-regular fa-circle mr-2"></i>Rol Administrador/Staff</p></div>
+        </div>
+
+        <div class="card rounded-xl p-5">
+          <h3 class="mb-4 text-lg font-black"><i class="fa-solid fa-chart-line mr-2 text-rose-400"></i>Mis Solicitudes</h3>
+          <div class="grid grid-cols-2 gap-3 text-center"><div class="soft rounded-xl p-4"><b id="stTotal" class="text-3xl">0</b><p class="text-xs text-gray-400">Total</p></div><div class="soft rounded-xl p-4"><b id="stPend" class="text-3xl text-amber-300">0</b><p class="text-xs text-gray-400">Pendientes</p></div><div class="soft rounded-xl p-4"><b id="stAcc" class="text-3xl text-emerald-400">0</b><p class="text-xs text-gray-400">Aprobadas</p></div><div class="soft rounded-xl p-4"><b id="stRej" class="text-3xl text-red-400">0</b><p class="text-xs text-gray-400">Rechazadas</p></div></div>
+        </div>
+
+        <div class="card rounded-xl p-5"><div class="mb-4 flex justify-between"><b class="text-lg"><i class="fa-solid fa-book-open mr-2 text-rose-400"></i>Formularios</b><button onclick="showView('applications')" class="text-sm text-rose-300">Ver todos</button></div><div id="formListSmall" class="max-h-[320px] space-y-5 overflow-y-auto pr-2"></div></div>
+      </aside>
+    </section>
+
+    <section id="profile" class="view hidden p-4">
+      <div class="mb-5 flex items-center gap-3"><div class="rounded-lg bg-rose-400/20 p-3 text-rose-300"><i class="fa-regular fa-user"></i></div><div><h2 class="text-2xl font-black">Mi Perfil</h2><p class="text-sm text-gray-400">Gestiona tu información personal</p></div></div>
+      <div class="card rounded-xl p-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4"><div id="profileAvatar" class="h-20 w-20 overflow-hidden rounded-full bg-[#111]"></div><div><h3 id="profileName" class="text-2xl font-black">Usuario</h3><p class="text-sm text-gray-400">@ <span id="profileHandle">usuario</span> • <span id="profileDays">0 días</span> • <span class="text-indigo-400"><i class="fa-brands fa-discord"></i> Conectado</span></p></div></div>
+          <span id="profileWlStatus" class="rounded-lg border border-[#333] bg-[#1b1f27] px-4 py-3 font-bold text-gray-400"><i class="fa-solid fa-lock mr-2"></i>Sin Whitelist</span>
+        </div>
+      </div>
+      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+        <div class="card rounded-xl p-6"><h3 class="mb-5 text-xl font-black"><i class="fa-regular fa-user mr-2 text-rose-400"></i>Información Personal</h3><div id="personalInfo" class="space-y-5"></div></div>
+        <div class="card rounded-xl p-6"><h3 class="mb-5 text-xl font-black"><i class="fa-solid fa-globe mr-2 text-rose-400"></i>Cuentas Vinculadas</h3><div id="linkedInfo"></div></div>
+      </div>
+      <div class="card mt-6 rounded-xl p-6"><h3 class="mb-4 text-xl font-black"><i class="fa-regular fa-message mr-2 text-rose-400"></i>Biografía</h3><p class="text-gray-400">HISPANIA RP.</p></div>
+    </section>
+
+    <section id="rules" class="view hidden p-4">
+      <div class="mb-8">
+        <h2 class="text-3xl font-black">Normativas <span class="text-rose-300">.</span></h2>
+        <p class="text-gray-400">Categorías del servidor Hispania</p>
+      </div>
+      <div id="rulesContent" class="space-y-12"></div>
+    </section>
+
+    <section id="applications" class="view hidden p-4"><h2 class="mb-1 text-2xl font-black">Nueva Aplicación</h2><p class="mb-5 text-gray-400">Selecciona el formulario que deseas completar</p><div id="formsGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div></section>
+    <section id="requests" class="view hidden p-4"><div class="mb-5 flex justify-between"><div><h2 class="text-2xl font-black">Revisión de WL</h2><p class="text-gray-400">Administradores y staff pueden revisar, aceptar o rechazar.</p></div><button onclick="renderAll()" class="rounded-lg border border-[#333] px-4 py-2">Actualizar</button></div><div id="requestsGrid" class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div></section>
+  </main>
+</div>
+
+<div id="exam" class="fixed inset-0 z-40 hidden overflow-y-auto bg-[#050505] p-8">
+  <div class="mx-auto max-w-7xl">
+    <div class="mb-3 flex justify-between text-gray-400"><span id="answered">0 de 30 respondidas</span><span id="progText">0%</span></div>
+    <div class="mb-6 h-2 rounded bg-[#222]"><div id="progBar" class="h-2 rounded bg-rose-300" style="width:0%"></div></div>
+    <div class="grid gap-6 lg:grid-cols-[1fr_350px]">
+      <div><div class="card rounded-xl p-6"><span id="cat" class="rounded-full border border-rose-400/50 bg-rose-500/20 px-3 py-1 text-xs font-black text-rose-300">WL</span><p id="qpos" class="mt-5 text-sm text-gray-500">Pregunta 1 de 30</p><h3 id="qtext" class="mt-3 text-xl font-black leading-relaxed">Pregunta</h3><div id="opts" class="mt-7 space-y-3"></div></div><div class="mt-6 flex justify-between"><button onclick="prevQ()" class="soft rounded-lg px-5 py-3 font-black text-gray-400">Anterior</button><button onclick="nextQ()" class="rounded-lg bg-rose-300 px-6 py-3 font-black">Siguiente</button></div></div>
+      <aside><div class="card rounded-xl p-5"><b class="text-gray-400">Navegación (<span id="navCount">0/30</span>)</b><div id="qnav" class="mt-4 grid grid-cols-10 gap-2"></div></div><div class="mt-4 rounded-xl bg-emerald-700 p-4 text-center font-black">Mínimo 24 respuestas<p id="minCount" class="text-xs font-normal">0/24 mínimo</p></div><button id="finishBtn" onclick="finishExam()" class="mt-4 w-full rounded-xl bg-rose-400 py-4 font-black disabled:cursor-not-allowed disabled:opacity-40" disabled>Terminar WL desde pregunta 20</button><button onclick="closeExam()" class="mt-3 w-full rounded-xl border border-[#222] py-3 font-black text-gray-400">Salir</button></aside>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="fixed inset-0 z-[80] hidden items-center justify-center bg-black/80 p-4"><div class="card w-full max-w-sm rounded-2xl p-6 text-center"><h3 id="mTitle" class="text-xl font-black">Mensaje</h3><p id="mText" class="mt-2 text-gray-400"></p><button onclick="modal.classList.add('hidden')" class="mt-6 w-full rounded-xl bg-rose-400 py-3 font-black">Aceptar</button></div></div>
+
+<script>
+/* =========================================================
+   CONFIG — rellena estos 4 valores con los tuyos (ver README.md)
+   ========================================================= */
+const CONFIG = {
+  // ID público de tu app en https://discord.com/developers/applications
+  discordClientId: "1462496077025382656",
+  // PENDIENTE: pon aquí la URL exacta donde publiques index.html en GitHub Pages
+  // (ej: "https://tuusuario.github.io/hispania-rp/") — debe ser IDÉNTICA
+  // a la que registres en Discord como Redirect URI. Ver README.md paso 2.
+  discordRedirectUri: "https://TU-USUARIO.github.io/TU-REPO/",
+  // PENDIENTE: URL de tu Worker una vez lo despliegues (ver README.md paso 3)
+  apiBase: "https://TU-WORKER.workers.dev",
+  // Logo actual (link de Discord, CADUCARÁ tarde o temprano por la firma ex=/is=/hm=).
+  // Recomendado: sube esta misma imagen a tu repo de GitHub Pages y cambia esto
+  // por el link "raw" permanente, ej: "https://raw.githubusercontent.com/tuusuario/hispania-rp/main/logo.png"
+  logoUrl: "https://media.discordapp.net/attachments/1469091417765970162/1531759802412433439/hispania_RP.png?ex=6a6b0abb&is=6a69b93b&hm=ab4d1e64a477a13109cd326adba9970d2ec0119992a430731ca6d8d46f28b06d&=&format=webp&quality=lossless",
+};
+
+function buildDiscordAuthUrl() {
+  const p = new URLSearchParams({
+    client_id: CONFIG.discordClientId,
+    response_type: "code",
+    redirect_uri: CONFIG.discordRedirectUri,
+    scope: "identify email guilds.members.read",
+  });
+  return `https://discord.com/oauth2/authorize?${p.toString()}`;
+}
+
+const QTY=30,PASS=24,MIN_FINISH_QUESTION=20;
+let user=null,currentType="",questions=[],idx=0,answers={};
+
+const forms=[
+ {id:"staff",title:"Solicitud entrada al Staff",desc:"Filtro para entrar al equipo staff de Hispania RP.",icon:"fa-regular fa-file-lines"},
+ {id:"general",title:"Whitelist General",desc:"30 preguntas aleatorias sobre normativas.",icon:"fa-solid fa-brain"},
+ {id:"ems",title:"Formulario EMS",desc:"Ingreso al equipo médico y emergencias.",icon:"fa-regular fa-heart"},
+ {id:"police",title:"Formulario Policía",desc:"Postulación al cuerpo policial.",icon:"fa-solid fa-shield-halved"}
+];
+
+const ruleSections=[
+ {title:"Conceptos básicos de roleplay",desc:"Base de interpretación y comportamiento dentro de Hispania RP.",icon:"fa-solid fa-shield-halved",color:"from-purple-500 to-pink-500",rules:[
+  ["RP-001","Valorar la Vida (NVL)","Actúa de manera realista priorizando tu supervivencia."],
+  ["RP-002","Metagaming","No uses información OOC en el roleplay."],
+  ["RP-003","Powergaming","No fuerces acciones irreales o sin dar oportunidad de respuesta."],
+  ["RP-004","Interpretación del personaje","Tu personaje debe actuar con coherencia según su historia y límites."],
+  ["RP-005","Uso correcto de /me y /do","/me narra acciones físicas. /do describe estados verificables."],
+  ["RP-006","No romper personaje","Evita hablar OOC durante escenas activas salvo indicación staff."]
+ ]},
+ {title:"Normativas delictivas",desc:"Normas para robos, persecuciones, secuestros y delitos dentro de Hispania RP.",icon:"fa-solid fa-gavel",color:"from-purple-500 to-pink-500",rules:[
+  ["ND-001","Robos con rehenes","Todo robo con rehenes requiere negociación y prioridad por la vida del rehén."],
+  ["ND-002","Secuestros","El secuestro debe tener motivo IC claro y duración razonable."],
+  ["ND-003","Rehenes falsos","No se permite usar amigos como rehenes falsos para obtener ventaja."],
+  ["ND-004","Persecuciones","Las persecuciones deben respetar conducción lógica, entorno y estado del vehículo."],
+  ["ND-005","Zonas seguras","No se puede iniciar ni continuar rol agresivo dentro de zonas seguras."],
+  ["ND-006","Motivo delictivo","Todo delito debe tener motivo IC y no hacerse solo para buscar acción."]
+ ]},
+ {title:"Guía Policial",desc:"Guía de procedimientos policiales.",icon:"fa-solid fa-siren-on",color:"from-rose-500 to-pink-500",rules:[
+  ["GP-001","Procedimiento inicial","Asegura perímetro, evalúa riesgo y comunica situación por radio."],
+  ["GP-002","Uso proporcional de fuerza","La fuerza debe escalar según amenaza, resistencia y riesgo."],
+  ["GP-003","Lectura de derechos","Antes de procesar, informa derechos y cargos según normativa."],
+  ["GP-004","Cadena de custodia","Las pruebas deben documentarse y mantenerse dentro del procedimiento."],
+  ["GP-005","Negociación","En robos con rehenes, la negociación tiene prioridad antes del uso de fuerza."],
+  ["GP-006","Detenidos rendidos","Si un sospechoso se rinde, debe procesarse sin abuso ni humillación."]
+ ]},
+ {title:"Normativas General: Hispania RP",desc:"Reglas generales del servidor.",icon:"fa-solid fa-shield",color:"from-purple-500 to-pink-500",rules:[
+  ["REG-001","Respeto General","Trata a todos con respeto dentro y fuera de rol."],
+  ["REG-002","Spam y Flood","No hagas spam en ningún canal ni dentro del servidor."],
+  ["REG-003","Combat Log","No te desconectes durante situaciones activas."],
+  ["REG-004","Random Deathmatch (RDM)","No ataques sin razón roleplay válida."],
+  ["REG-005","Vehicle Deathmatch (VDM)","No uses vehículos como arma sin motivo de rol autorizado."],
+  ["REG-006","Uso de exploits","Está prohibido aprovechar bugs o errores del sistema."],
+  ["REG-007","Toxicidad","La toxicidad OOC puede ser sancionada de forma inmediata."],
+  ["REG-008","Reportes","Todo reporte debe tener pruebas claras y contexto suficiente."],
+  ["REG-009","Zonas vigiladas","Permiten tensión narrativa controlada, pero no abuso del entorno."],
+  ["REG-010","Zonas seguras","Queda prohibida cualquier acción violenta o delictiva en zonas seguras."]
+ ]},
+ {title:"Naturaleza del Roleplay",desc:"El roleplay consiste en crear e interpretar un personaje con historia, personalidad y motivaciones propias.",icon:"fa-solid fa-users",color:"from-purple-500 to-pink-500",rules:[
+  ["NR-001","Historia del personaje","Tu personaje debe tener motivaciones y comportamiento coherente."],
+  ["NR-002","Consecuencias","Toda acción debe asumir consecuencias dentro del rol."],
+  ["NR-003","Separación IC/OOC","No mezcles emociones o información fuera de rol con acciones dentro del personaje."]
+ ]}
+];
+
+const topics={general:["zona segura","robo con rehenes","accidente grave","discusión OOC","persecución","PK reciente","uso de /me y /do","secuestro"],staff:["ticket sin pruebas","usuario alterado","amigo reportado","apelación","bug explotable","MG probado","PG probado","conflicto entre facciones"],ems:["tiroteo activo","paciente inconsciente","triage múltiple","herido agresivo","traslado hospitalario","RCP","informe médico","zona no asegurada"],police:["robo a banco","sospechoso armado","rehén","persecución urbana","detenido rendido","lectura de derechos","incautación","control de tráfico"]};
+const correct=["Actuar con coherencia, respetar normativa y priorizar el rol.","Usar /me y /do correctamente sin mentir.","Valorar tu vida y evitar acciones imposibles.","Reportar por vía administrativa sin romper la escena.","Escuchar, documentar y actuar con neutralidad.","Pedir apoyo si la escena no está asegurada."];
+const wrong=["Ignorar la normativa para terminar rápido.","Usar información de Discord para ganar ventaja.","Forzar la escena sin dar opción.","Desconectarte para evitar consecuencias.","Insultar OOC.","Actuar invencible.","Inventar pruebas o mentir en /do.","Resolver todo fuera de rol."];
+
+window.onload=async ()=>{
+  createSnow();
+  authLogo.src=CONFIG.logoUrl;sideLogo.src=CONFIG.logoUrl;dashLogo.src=CONFIG.logoUrl;
+
+  const p=new URLSearchParams(location.search);
+  const code=p.get("code");
+  const savedUser=localStorage.gl_user;
+
+  if(code){
+    history.replaceState({},document.title,location.pathname);
+    await exchangeCode(code);
+  }else if(savedUser){
+    login(JSON.parse(savedUser),false);
+  }
+  renderAll();
+};
+
+function createSnow(){for(let i=0;i<80;i++){let s=document.createElement("span");s.className="snow";s.textContent="•";s.style.left=Math.random()*100+"vw";s.style.fontSize=Math.random()*10+8+"px";s.style.animationDuration=Math.random()*7+6+"s";s.style.animationDelay=Math.random()*6+"s";document.body.appendChild(s)}}
+
+// ---------- LOGIN REAL CON DISCORD ----------
+function openDiscordAuth(){
+  location.href=buildDiscordAuthUrl();
+}
+
+async function exchangeCode(code){
+  setAuthError("");
+  const btn=document.getElementById("btnDiscordLogin");
+  if(btn){btn.disabled=true;btn.innerText="Conectando...";}
+  try{
+    const res=await fetch(`${CONFIG.apiBase}/exchange`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({code})
+    });
+    const data=await res.json();
+    if(!res.ok||data.error){
+      setAuthError("No se pudo iniciar sesión con Discord. Intenta de nuevo.");
+      console.error(data);
+      return;
+    }
+    login({
+      tag:data.tag,
+      avatar:data.avatar,
+      roles:data.roles,
+      id:data.id,
+      email:data.email,
+      joined:new Date().toLocaleDateString()
+    },true);
+  }catch(e){
+    setAuthError("Error de conexión con el servidor de autenticación.");
+    console.error(e);
+  }
+}
+
+function setAuthError(msg){
+  const el=document.getElementById("authError");
+  if(!el)return;
+  if(msg){el.innerText=msg;el.classList.remove("hidden")}else{el.classList.add("hidden")}
+}
+
+// ---------- MODO DEMO (sin Discord real) ----------
+function demoLogin(){
+  login({
+    tag:"UsuarioDemo",
+    avatar:"",
+    roles:["ciudadano"],
+    id:"DEMO-0000",
+    email:"demo@ganglife.rp",
+    joined:new Date().toLocaleDateString()
+  },false);
+}
+
+function admin(){return user&&user.roles.some(r=>["staff","staffs","admin","administrator","administrador","owner","moderador","jefe_staff"].includes(r))}
+function login(u,send){user={tag:u.tag,avatar:u.avatar||"",roles:u.roles||["ciudadano"],id:u.id||"No enviado",email:u.email||"No enviado",joined:u.joined||new Date().toLocaleDateString()};localStorage.gl_user=JSON.stringify(user);auth.classList.add("hidden");document.body.classList.remove("overflow-hidden");paintUser();if(send)log("Usuario conectado",[{name:"Usuario",value:user.tag,inline:true},{name:"Roles",value:user.roles.join(", "),inline:true}])}
+function paintUser(){let av=user.avatar?`<img src="${user.avatar}" class="h-full w-full object-cover">`:`<div class="flex h-full w-full items-center justify-center bg-[#5865F2]"><i class="fa-brands fa-discord"></i></div>`;["sideAvatar","profileAvatar"].forEach(id=>document.getElementById(id).innerHTML=av);sideName.innerText=dashName.innerText=profileName.innerText=user.tag;dashHandle.innerText=profileHandle.innerText=user.tag;sideRole.innerText=admin()?"Administrador":"Usuario";staffLine.innerHTML=admin()?`<i class="fa-regular fa-circle-check mr-2 text-emerald-400"></i>Rol Administrador/Staff`:`<i class="fa-regular fa-circle mr-2"></i>Rol Administrador/Staff`;percent.innerText=admin()?"85%":"60%";bar.style.width=admin()?"85%":"60%";profileDays.innerText=user.joined;renderProfileInfo()}
+function renderProfileInfo(){const accepted=getApps().some(a=>a.user===user.tag&&a.status==="accepted");profileWlStatus.innerHTML=accepted?`<i class="fa-solid fa-circle-check mr-2"></i>Whitelist Aprobada`:`<i class="fa-solid fa-lock mr-2"></i>Sin Whitelist`;personalInfo.innerHTML=`<div><p class="text-sm text-gray-500">Nombre</p><b>${user.tag}</b></div><div><p class="text-sm text-gray-500">Nombre de usuario</p><b>@${user.tag} <span class="text-gray-500">(Discord)</span></b></div><div><p class="text-sm text-gray-500">ID Discord</p><b>${user.id}</b></div><div><p class="text-sm text-gray-500">Correo Electrónico</p><b><i class="fa-regular fa-envelope mr-2 text-gray-400"></i>${user.email}</b></div><div><p class="text-sm text-gray-500">Roles</p><b>${user.roles.join(", ")}</b></div>`;linkedInfo.innerHTML=`<div class="rounded-lg border border-indigo-500/40 bg-indigo-500/10 p-4"><div class="flex items-center gap-3"><i class="fa-brands fa-discord rounded-lg bg-indigo-500/30 p-3 text-indigo-300"></i><div><b>Discord</b><p class="text-sm text-indigo-300">ID: ${user.id}</p></div><i class="fa-regular fa-circle-check ml-auto text-indigo-300"></i></div></div><div class="mt-4 flex justify-between rounded-lg bg-[#151515] p-4"><span class="text-gray-400"><i class="fa-solid fa-award mr-2 text-amber-300"></i>Miembro desde</span><b>${user.joined}</b></div>`}
+function showView(id,btn){document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");pageTitle.innerText={dashboard:"Dashboard",profile:"Mi Perfil",applications:"Aplicaciones",rules:"Normativas",requests:"Revisión WL"}[id];document.querySelectorAll(".side").forEach(b=>b.classList.remove("active-nav"));if(btn)btn.classList.add("active-nav");if(id==="profile"&&user)renderProfileInfo()}
+function renderAll(){renderForms();renderRules();renderRequests();renderStats();if(user)renderProfileInfo()}
+function renderForms(){let card=f=>`<button onclick="start('${f.id}')" class="card rounded-xl p-4 text-left hover:border-rose-400"><i class="${f.icon} rounded-lg border border-rose-400 bg-rose-500/20 p-3 text-rose-300"></i><h4 class="mt-3 font-black">${f.title}</h4><p class="mt-2 text-sm text-gray-400">${f.desc}</p><div class="mt-4 rounded-lg bg-[#151515] p-3 text-center"><b class="text-2xl">30</b><p class="text-xs text-gray-500">Preguntas fijas aleatorias</p></div><div class="mt-3 rounded-lg bg-rose-300 py-2 text-center text-sm font-black">Aplicar <i class="fa-solid fa-arrow-right ml-1"></i></div></button>`;formsGrid.innerHTML=forms.map(card).join("");formListSmall.innerHTML=forms.map(f=>`<button onclick="start('${f.id}')" class="block w-full text-left"><b>${f.title}</b><p class="truncate text-xs text-gray-500">${f.desc}</p></button>`).join("")}
+function renderRules(){rulesContent.innerHTML=ruleSections.map(sec=>`<section><div class="mb-5 flex items-center justify-between"><div class="flex items-start gap-4"><div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${sec.color} text-xl text-white"><i class="${sec.icon}"></i></div><div><h3 class="text-2xl font-black uppercase">${sec.title}</h3><p class="text-gray-400">${sec.desc}</p></div></div><span class="rounded-lg bg-[#242424] px-4 py-2 text-sm font-bold text-gray-300">${sec.rules.length} reglas</span></div><div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">${sec.rules.map(ruleCard).join("")}</div></section>`).join("")}
+function ruleCard(r){return`<article class="group rounded-xl border border-[#242424] bg-[#080808] p-5 transition hover:border-rose-400/60 hover:bg-[#0e0e0e]"><div class="mb-4 flex items-center justify-between"><span class="font-mono text-xs font-bold uppercase tracking-wider text-rose-300">${r[0]}</span><i class="fa-solid fa-star text-xs text-rose-400 opacity-70"></i></div><h4 class="text-base font-black text-white">${r[1]}</h4><p class="mt-3 text-sm leading-relaxed text-gray-400">${r[2]}</p></article>`}
+function start(t){if(!user)return alertBox("Discord obligatorio","Autoriza Discord primero (o entra en modo demo).");currentType=t;idx=0;answers={};questions=gen(t);exam.classList.remove("hidden");renderQ()}
+function gen(t){let arr=[],used=new Set();while(arr.length<QTY){let pool=topics[t]||topics.general,s=pick(pool),stem=pick([`Tu personaje enfrenta una situación de ${s}. ¿Qué acción es correcta?`,`Durante un rol de ${s}, ¿cómo debes actuar?`,`Si ocurre ${s}, ¿qué demuestra mejor rol?`,`En una escena de ${s}, ¿cuál decisión es adecuada?`]);if(used.has(stem))continue;used.add(stem);arr.push({cat:(forms.find(f=>f.id===t)||forms[0]).title.toUpperCase(),q:stem,a:shuffle([{t:pick(correct),ok:true},{t:pick(wrong),ok:false},{t:pick(wrong),ok:false},{t:pick(wrong),ok:false}])})}return arr}
+function renderQ(){let q=questions[idx],c=Object.keys(answers).length,p=Math.round(c/QTY*100),canFinish=idx+1>=MIN_FINISH_QUESTION;answered.innerText=`${c} de ${QTY} respondidas`;progText.innerText=p+"%";progBar.style.width=p+"%";navCount.innerText=`${c}/${QTY}`;minCount.innerText=`${Math.min(c,PASS)}/${PASS} mínimo`;finishBtn.disabled=!canFinish;finishBtn.innerText=canFinish?"Terminar WL":"Terminar WL desde pregunta 20";cat.innerText=q.cat;qpos.innerText=`Pregunta ${idx+1} de ${QTY}`;qtext.innerText=q.q;opts.innerHTML=q.a.map((x,i)=>`<button class="option flex w-full gap-4 rounded-xl border border-[#2a2a2a] bg-[#151515] p-5 text-left font-bold text-gray-300" aria-checked="${answers[idx]?.i===i}" onclick="sel(${i},${x.ok})"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#2a2a2a]">${String.fromCharCode(65+i)}</span>${x.t}</button>`).join("");qnav.innerHTML=questions.map((_,i)=>`<button onclick="go(${i})" class="qbtn ${i===idx?"active":answers[i]?"done":"empty"} rounded-lg p-2 text-xs font-black">${i+1}</button>`).join("")}
+function sel(i,ok){answers[idx]={i,ok};renderQ()}function nextQ(){if(idx<QTY-1){idx++;renderQ()}}function prevQ(){if(idx>0){idx--;renderQ()}}function go(i){idx=i;renderQ()}function closeExam(){exam.classList.add("hidden")}
+function finishExam(){if(idx+1<MIN_FINISH_QUESTION)return alertBox("Aún no puedes terminar",`Debes llegar mínimo a la pregunta ${MIN_FINISH_QUESTION}.`);let c=Object.keys(answers).length;if(c<MIN_FINISH_QUESTION)return alertBox("Faltan respuestas",`Debes responder mínimo ${MIN_FINISH_QUESTION} preguntas para terminar.`);let score=Object.values(answers).filter(a=>a.ok).length,passed=score>=PASS,feedback=buildFeedback(score);let app={id:`GL-${Date.now().toString().slice(-6)}-${currentType.toUpperCase()}`,user:user.tag,avatar:user.avatar,roles:user.roles,form:(forms.find(f=>f.id===currentType)||forms[0]).title,score,total:QTY,status:passed?"pending":"rejected",reviewer:passed?"":"Sistema WL",feedback,createdAt:new Date().toLocaleString()};let apps=getApps();apps.unshift(app);localStorage.gl_apps=JSON.stringify(apps);logApp(app);closeExam();alertBox(passed?"Solicitud enviada":"Desaprobado",passed?"Tu WL quedó pendiente de aprobación por administradores.":`Sacaste ${score}/${QTY}.`);renderAll()}
+function buildFeedback(score){return{good:score>=24?"Buen dominio de normas, valoración de vida y respuestas coherentes.":"Respondió parte del examen, pero necesita reforzar normas base.",bad:score<24?"Debe estudiar MG, PG, robos, rehenes y uso de /me /do.":"Revisión recomendada en robos, zonas seguras y procedimientos."}}
+function renderRequests(){let apps=getApps(),vis=admin()?apps:apps.filter(a=>user&&a.user===user.tag);requestsGrid.innerHTML=vis.length?vis.map(a=>`<article class="card rounded-xl p-4"><div class="flex gap-3">${a.avatar?`<img src="${a.avatar}" class="h-10 w-10 rounded-lg object-cover">`:`<div class="h-10 w-10 rounded-lg bg-[#5865F2]"></div>`}<div class="flex-1"><b>${a.user}</b><p class="text-xs text-gray-400">${a.form}</p></div><span class="text-rose-300">${a.score}/${a.total}</span></div><p class="mt-3 text-xs text-gray-500">${a.createdAt}</p><p class="mt-2 font-black ${a.status==="accepted"?"text-emerald-400":a.status==="rejected"?"text-red-400":"text-amber-300"}">${a.status}</p><div class="mt-3 rounded-lg bg-[#111] p-3 text-xs text-gray-400"><b class="text-emerald-300">Bien:</b> ${a.feedback?.good||"Sin feedback"}<br><b class="text-red-300">Mal:</b> ${a.feedback?.bad||"Sin feedback"}</div>${admin()&&a.status==="pending"?`<div class="mt-4 grid grid-cols-2 gap-2"><button onclick="review('${a.id}','accepted')" class="rounded-lg bg-emerald-600 py-2 font-black">Aceptar</button><button onclick="review('${a.id}','rejected')" class="rounded-lg bg-red-600 py-2 font-black">Rechazar</button></div>`:""}</article>`).join(""):`<p class="text-gray-500">No hay solicitudes.</p>`}
+function review(id,status){let apps=getApps(),a=apps.find(x=>x.id===id);if(!admin())return alertBox("Sin permiso","Solo administradores/staff pueden revisar WL.");a.status=status;a.reviewer=user.tag;a.reviewedAt=new Date().toLocaleString();localStorage.gl_apps=JSON.stringify(apps);log(status==="accepted"?"WL aceptada":"WL rechazada",[{name:"Usuario WL",value:a.user,inline:true},{name:"Admin/Staff",value:user.tag,inline:true},{name:"Formulario",value:a.form,inline:true},{name:"Nota",value:`${a.score}/${a.total}`,inline:true}]);renderAll()}
+function renderStats(){let apps=getApps(),mine=user?apps.filter(a=>a.user===user.tag):[];sideApps.innerText=mine.length;stTotal.innerText=mine.length;stPend.innerText=mine.filter(a=>a.status==="pending").length;stAcc.innerText=mine.filter(a=>a.status==="accepted").length;stRej.innerText=mine.filter(a=>a.status==="rejected").length;recent.innerHTML=mine.length?`<div class="w-full space-y-3 p-5">${mine.slice(0,5).map(a=>`<div class="soft rounded-lg p-3"><b>${a.form}</b><p class="text-sm text-gray-500">${a.status} · ${a.score}/${a.total}</p></div>`).join("")}</div>`:`<div><i class="fa-regular fa-file-lines mb-4 text-5xl"></i><p>No tienes aplicaciones aún</p><button onclick="showView('applications')" class="mt-5 rounded-lg bg-rose-300 px-5 py-3 font-black text-white">Crear aplicación</button></div>`;if(user)renderProfileInfo()}
+function getApps(){try{return JSON.parse(localStorage.gl_apps||"[]")}catch{return[]}}
+function logApp(a){log(a.status==="pending"?"Nueva WL pendiente":"WL desaprobada",[{name:"Quien hizo la WL",value:a.user,inline:true},{name:"Formulario",value:a.form,inline:true},{name:"Nota",value:`${a.score}/${a.total}`,inline:true},{name:"Estado",value:a.status,inline:true},{name:"Bueno",value:a.feedback.good,inline:false},{name:"Malo",value:a.feedback.bad,inline:false},{name:"Código",value:a.id,inline:false}],a.avatar)}
+// Los logs ahora pasan por el Worker: el webhook nunca se expone en el navegador.
+async function log(title,fields,thumb=""){
+  try{
+    await fetch(`${CONFIG.apiBase}/log`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        username:"Hispania RP WL Logs",
+        embeds:[{title,color:16738740,thumbnail:thumb?{url:thumb}:undefined,fields,timestamp:new Date().toISOString()}]
+      })
+    });
+  }catch(e){console.log(e)}
+}
+function logout(){localStorage.removeItem("gl_user");location.reload()}function pick(a){return a[Math.floor(Math.random()*a.length)]}function shuffle(a){return[...a].sort(()=>Math.random()-.5)}function alertBox(t,m){mTitle.innerText=t;mText.innerText=m;modal.classList.remove("hidden");modal.classList.add("flex")}
+</script>
+</body>
+</html>

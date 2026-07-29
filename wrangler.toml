@@ -1,0 +1,22 @@
+name = "hispania-rp-auth"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+DISCORD_CLIENT_ID = "1462496077025382656"
+
+# PENDIENTE: cámbialo por la URL exacta donde publiques index.html en GitHub Pages
+# (debe ser IDÉNTICA a la que uses en Discord y en CONFIG.discordRedirectUri del HTML)
+DISCORD_REDIRECT_URI = "https://TU-USUARIO.github.io/TU-REPO/"
+
+DISCORD_GUILD_ID = "1499178705506013344"
+
+# Roles que cuentan como staff/admin (admin y founder)
+ADMIN_ROLE_IDS = "1530418417188995263,1530418409605697596"
+
+# PENDIENTE: pon aquí el mismo dominio que uses como discordRedirectUri (sin barra final)
+ALLOWED_ORIGIN = "https://TU-USUARIO.github.io"
+
+# Estas 2 NO van aquí — se configuran aparte y en secreto con:
+#   wrangler secret put DISCORD_CLIENT_SECRET
+#   wrangler secret put DISCORD_WEBHOOK_URL
